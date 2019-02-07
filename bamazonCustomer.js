@@ -18,22 +18,25 @@ var connection = mysql.createConnection({
 
 connection.connect(function (err) {
     if (err) throw err;
+    console.log("\n connected as ID")
     start();
 })
 
 function start() {
-    inquirer
-        .prompt({
+    inquirer.prompt({
             name: 'mainMenu',
             type: 'list',
             message: 'What would you like to do?',
-            choices: ['Place an order.', 'Exit application']
+            choices: ['Place an order', 'Exit application']
         }).then(function (answer) {
-            if (answer === 'Place an order') {
-                console.log("you chose to place an oder")
+            if (answer.mainMenu === 'Place an order') {
+                console.log("you choose to place an order")
             }
             else {
                 connection.end();
             }
-        })
+        });
 }
+
+// functions for application.
+// Place an order function
