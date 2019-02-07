@@ -24,19 +24,31 @@ connection.connect(function (err) {
 
 function start() {
     inquirer.prompt({
-            name: 'mainMenu',
-            type: 'list',
-            message: 'What would you like to do?',
-            choices: ['Place an order', 'Exit application']
-        }).then(function (answer) {
-            if (answer.mainMenu === 'Place an order') {
-                console.log("you choose to place an order")
-            }
-            else {
-                connection.end();
-            }
-        });
+        name: 'mainMenu',
+        type: 'list',
+        message: 'What would you like to do?',
+        choices: ['Place an order', 'Exit application']
+    }).then(function (answer) {
+        if (answer.mainMenu === 'Place an order') {
+            console.log("Please selected an item by its ID number");
+            showInventory();
+        }
+        else {
+            connection.end();
+        }
+    });
 }
 
 // functions for application.
-// Place an order function
+// function that shows the customer all availble items in database
+function showInventory() {
+    connection.query("SELECT * FROM products", function (err, results) {
+        if (err) throw err;
+        console.log("ITEMS FOR SALE")
+        var productArray = [];
+        for (var i = 0; i < results.length; i++) {
+            productArray.push(results[i].product_name)
+        }
+        console.log("\n" + productArray.splice("\n"))
+    })
+}
