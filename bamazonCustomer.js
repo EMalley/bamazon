@@ -82,13 +82,15 @@ function selectItem() {
                 else {
                     const newDBAmount = parseInt(DBAmount) - amount;
                     var productName = (results[0].product_name)
-                    console.log(newDBAmount)
-                    console.log("this is the new data amount ", newDBAmount)
+                    var price = results[0].price;
+                    var total = (price * amount)
+                    // console.log("this is the new data amount ", newDBAmount)
                     connection.query("UPDATE products SET stock_quantity = ? WHERE item_id = ?", [newDBAmount, results[0].item_id], function (err, results) {
                         if (err) throw err;
                         else {
-                            console.log(`Thank you for buying ${amount} of ${productName}. Come back again soon!`);
-                            
+                            console.log(`Thank you for buying ${amount} of ${productName}.\n 
+                            Your total is: ${total} \n
+                            Come back again soon!`);
                             connection.end();
                         }
                     });
