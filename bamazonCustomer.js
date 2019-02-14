@@ -67,15 +67,15 @@ function selectItem() {
             connection.query(queryDB, item, function (err, results) {
                 if (err) throw err;
                 // console.log(results)
-                const DBAmount = parseInt(results[0].stock_quantity);
                 // console.log(results.stock_quantity)
                 // console.log(DBAmount)
-
-                if (!results.length) {
+                if (results.length == 0) {
                     console.log("Sorry we dont have that item. Please try again");
                     selectItem();
                 }
-                else if (amount > DBAmount) {
+                const DBAmount = parseInt(results[0].stock_quantity);
+                
+                if (amount > DBAmount) {
                     console.log("Sorry we dont have that many, try again");
                     selectItem();
                 }
